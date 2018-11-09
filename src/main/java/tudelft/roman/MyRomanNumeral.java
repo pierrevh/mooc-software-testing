@@ -24,7 +24,7 @@ public class MyRomanNumeral {
         int result = 0;
         int valueOfPrevious = 0;
         for (int i = roman.length() - 1; i >= 0; i--) {
-            int valueOfCurrent = NUMERAL_VALUES.get(roman.charAt(i));
+            int valueOfCurrent = getOrThrow(roman.charAt(i));
             if (valueOfCurrent < valueOfPrevious) {
                 result -= valueOfCurrent;
             } else {
@@ -36,8 +36,16 @@ public class MyRomanNumeral {
         return result;
     }
 
+    private static int getOrThrow(char romanNumeral) {
+        Integer value = NUMERAL_VALUES.get(romanNumeral);
+        if (value == null)
+            throw new IllegalArgumentException("The character " + romanNumeral + " is not a roman numeral");
+        return value;
+    }
+
     private static int success = 0;
     private static int fail = 0;
+
     public static void main(String[] args) {
         test("", 0);
         test(null, 0);
@@ -46,9 +54,25 @@ public class MyRomanNumeral {
         test("IV", 4);
         test("MMCMXLIV", 2944);
 
-        // TODO test("BLABLA", ???)
+        testWithException("BLABLA", IllegalArgumentException.class);
 
-        System.out.println("Ran " + (success+fail) + " testcases. " + success +" successful, "+fail+" failures");
+        System.out.println("Ran " + (success + fail) + " testcases. " + success + " successful, " + fail + " failures");
+    }
+
+    private static void testWithException(String testcase, Class<? extends Exception> exception) {
+        try {
+            test(testcase, Integer.MIN_VALUE);
+            System.out.println("Fail. Expected exception " + exception);
+            fail++;
+        } catch (Exception e) {
+            boolean expectedExceptionThrown = exception.getName().equals(e.getClass().getName());
+            if (expectedExceptionThrown) {
+                success++;
+            } else {
+                fail++;
+                System.out.println("Fail. Expected exception " + exception);
+            }
+        }
     }
 
     private static void test(String testcase, int expected) {
