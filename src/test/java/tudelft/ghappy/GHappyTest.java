@@ -24,8 +24,14 @@ public class GHappyTest {
     }
 
     @Test
-    void twoGeesAreHappy() {
+    void twoGeesSideBySideAreHappy() {
         assertTrue(gHappy.gHappy("gg"));
+        assertTrue(gHappy.gHappy("ggxxxx"));
+        assertTrue(gHappy.gHappy("ggx"));
+        assertTrue(gHappy.gHappy("xxxxxgg"));
+        assertTrue(gHappy.gHappy("xgg"));
+        assertTrue(gHappy.gHappy("xxggxx"));
+        assertTrue(gHappy.gHappy("xxggxxggxxxggxggs"));
     }
 
     @Test
