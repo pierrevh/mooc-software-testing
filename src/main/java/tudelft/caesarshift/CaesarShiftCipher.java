@@ -1,8 +1,11 @@
 package tudelft.caesarshift;
 
+import java.util.Objects;
+
 public class CaesarShiftCipher {
 
-    public String CaesarShiftCipher(String message, int shift){
+    public static String caesarShiftCipher(String message, int shift){
+        Objects.requireNonNull(message);
         StringBuilder sb = new StringBuilder();
         char currentChar;
         int length = message.length();
@@ -12,7 +15,7 @@ public class CaesarShiftCipher {
         for(int i = 0; i < length; i++){
             currentChar = message.charAt(i);
            
-            sb.append(currentChar);
+            //sb.append(currentChar);
             if (currentChar > 'z' || currentChar < 'a') {
                 return "invalid";
             } else if ((char) (currentChar + shift) > 'z') {
